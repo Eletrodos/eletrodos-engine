@@ -35,10 +35,20 @@ export default class Engine {
     this.renderer = new WebGLRenderer({ antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     root.appendChild(this.renderer.domElement);
+
+    this.update();
   }
 
   /** Adiciona um novo componente */
   public add = (gameObject: GameObject) => {
     this.gameObjects.push(gameObject);
+  }
+
+  /** Loop principal da engine, atualiza a cada frame */
+  public update = () => {
+    this.gameObjects.forEach(gameObject => {
+      gameObject.update();
+    });
+    requestAnimationFrame(this.update);
   }
 }

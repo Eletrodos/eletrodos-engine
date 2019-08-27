@@ -6,6 +6,6 @@ export default class TestPlayer extends GameObject {
   };
 
   public update = () => {
-
+    console.log(this);
   };
 }
