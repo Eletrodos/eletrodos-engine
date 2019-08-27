@@ -1,7 +1,6 @@
 import { Camera, Scene, OrthographicCamera, WebGLRenderer } from "three";
 
 import GameObject from "./components/gameObject";
-import { IComponent } from "./components/component";
 
 export default class Engine {
   private static instance: Engine;
@@ -10,7 +9,7 @@ export default class Engine {
     return this.instance;
   }
 
-  private gameObjects: IComponent[] = [];
+  private gameObjects: GameObject[] = [];
 
   private renderer?: WebGLRenderer;
   private camera?: Camera;
