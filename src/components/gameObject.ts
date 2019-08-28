@@ -9,10 +9,9 @@ export default abstract class GameObject {
   private engine: Engine = Engine.Instance;
 
   /** Chamado quando o objeto é construido na cena */
-  abstract start: () => void;
-  
+  abstract start(): void;
   /** Chamado sempre que o objeto é renderizado */
-  abstract update: () => void;
+  abstract update(): void;
 
   constructor() {
     this.engine.add(this);
