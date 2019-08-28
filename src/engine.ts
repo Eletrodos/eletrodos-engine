@@ -1,7 +1,7 @@
-import { Camera, Scene, OrthographicCamera, WebGLRenderer, Clock } from "three";
+import { Camera, Scene, WebGLRenderer, Clock, Object3D, PerspectiveCamera } from "three";
 
-import GameObject from "./components/gameObject";
 import Time from "./time";
+import Component from "./components/component";
 
 export default class Engine {
   private static instance: Engine;
@@ -10,7 +10,8 @@ export default class Engine {
     return this.instance;
   }
 
-  private gameObjects: GameObject[] = [];
+  /** Objetos do game */
+  private components: Component[] = [];
 
   private renderer: WebGLRenderer;
   private camera: Camera;
@@ -22,12 +23,8 @@ export default class Engine {
     this.scene = new Scene();
 
     // Cria a camera
-    this.camera = new OrthographicCamera(
-      window.innerWidth / 2 - 50,
-      window.innerWidth / 2,
-      window.innerHeight / 2 - 50,
-      window.innerHeight / 2
-    );
+    this.camera = new PerspectiveCamera(60, 60, 0, 500);
+
     this.camera.position.z = -5;
     this.scene.add(this.camera);
 
@@ -48,9 +45,13 @@ export default class Engine {
   }
 
   /** Adiciona um novo componente */
-  public add = (gameObject: GameObject) => {
-    this.gameObjects.push(gameObject);
-    gameObject.start();
+  public add = (component: Component) => {
+    this.components.push(component);
+  }
+
+  /** Adiciona um novo objeto de renderização na engine */
+  public addRenderer(object: Object3D) {
+    this.scene.add(object);
   }
 
   /** Loop principal da engine, atualiza a cada frame */
@@ -61,8 +62,8 @@ export default class Engine {
     Time.time += delta;
 
     // Atualiza os componentes
-    this.gameObjects.forEach(gameObject => gameObject.update());
+    this.components.forEach(component => component.update && component.update());
+    this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.update);
-
   }
 }
