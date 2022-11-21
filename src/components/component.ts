@@ -1,8 +1,10 @@
 import Engine from "../engine";
 
-export default interface Component {
-  /** Chamado sempre que o objeto é renderizado */
+export default interface IComponent {
+  /** Chamado uma vez por frame*/
   update: () => void;
+  /** Chamado quando o objeto é carregado */
+  start: () => void;
 }
 
 /** 
@@ -11,7 +13,6 @@ export default interface Component {
  * e fornecemos todos os metodos necessarios 
  */
 export default abstract class Component {
-
   private engine = Engine.Instance;
 
   constructor() {

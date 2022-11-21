@@ -8,6 +8,7 @@ import Transform from "./transform";
 export default abstract class GameObject extends Component {
 
   private components: any[] = [];
+  private states: IState[] = []
 
   public transform: Transform;
 
@@ -28,5 +29,10 @@ export default abstract class GameObject extends Component {
     return this.components.find(component => (
       component.constructor.name === componentType.constructor.name
     ))
+  }
+
+  /** Busca por um estado com  o id  especificado */
+  public getState(id: string) {
+    return this.states.find(state => state.id == id);
   }
 }
